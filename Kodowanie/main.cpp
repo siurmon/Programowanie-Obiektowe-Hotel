@@ -1,6 +1,7 @@
-#include <string>
-#include <vector>
-#include <memory>
+#include <iostream>
+#include "klasy.h"
+
+using namespace std;
 
 // --- DEKLARACJE KLAS ---
 class Pracownik;
@@ -13,8 +14,8 @@ class Zamowiona_Usluga;
 class Faktura;
 
 // --- STRUKTURY POMOCNICZE ---
-using Data = std::string; 
-using DataCzas = std::string;
+using Data = string; 
+using DataCzas = string;
 using Kwota = double;
 
 enum class StatusRezerwacji {

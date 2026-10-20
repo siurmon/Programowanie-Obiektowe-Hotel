@@ -1,49 +1,51 @@
+using namespace std;
+
 // --- KLASY ---
 
 class Osoba {
 private:
     int id;
-    std::string imie;
-    std::string nazwisko;
+    string imie;
+    string nazwisko;
 };
 
 class Gosc : public Osoba {
 private:
-    std::string email;
-    std::string telefon;
-    std::string rola;
+    string email;
+    string telefon;
+    string rola;
 };
 
 class Pracownik : public Osoba {
 private:
-    std::string numerPracownika;
+    string numerPracownika;
 };
 
 class Manager : public Pracownik {
 public:
-    std::string rola;
+    string rola;
 };
 
 class Recepcjonista : public Pracownik {
 public:
-    std::string rola;
+    string rola;
 };
 
 class Personel_Pokojowy : public Pracownik {
 public:
-    std::string rola;
+    string rola;
 };
 
 class Administrator : public Pracownik {
 public:
-    std::string rola;
+    string rola;
 };
 
 class Kopia_Zapasowa {
 private:
     int id;
     DataCzas dataUtworzenia;
-    std::string sciezkaPliku;
+    string sciezkaPliku;
     StatusKopii status;
 };
 
@@ -59,22 +61,22 @@ private:
 class Usluga_Dodatkowa {
 private:
     int id;
-    std::string nazwa;
+    string nazwa;
     Kwota cenaJednostkowa;
-    std::string nazwaJednostki;
+    string nazwaJednostki;
 };
 
 class Zamowiona_Usluga {
 private:
     int uslugaId;
-    std::string nazwa;
+    string nazwa;
     Kwota cenaJednostkowa;
     int ilosc;
 };
 
 class Faktura {
 private:
-    std::string numer;
+    string numer;
     int rezerwacjaId;
     Data dataWystawienia;
     Kwota kwotaPobytu;
@@ -101,16 +103,16 @@ private:
     StatusRezerwacji status;
     Kwota stawkaZaDobe;
     Faktura* faktura;
-    std::vector<Zamowiona_Usluga> zamowioneUslugi;
+    vector<Zamowiona_Usluga> zamowioneUslugi;
     Kwota oplataAnulowania;
 };
 
 class SystemHotelu {
 private:
-    std::vector<Pracownik> pracownicy;
-    std::vector<Gosc> goscie;
-    std::vector<Pokoj> pokoje;
-    std::vector<Rezerwacja> rezerwacje;
-    std::vector<Usluga_Dodatkowa> uslugi;
-    std::vector<Kopia_Zapasowa> kopie;
+    vector<Pracownik> pracownicy;
+    vector<Gosc> goscie;
+    vector<Pokoj> pokoje;
+    vector<Rezerwacja> rezerwacje;
+    vector<Usluga_Dodatkowa> uslugi;
+    vector<Kopia_Zapasowa> kopie;
 };
