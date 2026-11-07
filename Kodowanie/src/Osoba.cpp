@@ -8,3 +8,5 @@ Osoba::Osoba(int id, const string& imie, const string& nazwisko)
 Osoba::~Osoba() = default;
 
 int Osoba::pobierzId() const { return id_; }
+string Osoba::pobierzImie() const { return imie_; }
+string Osoba::pobierzNazwisko() const { return nazwisko_; }

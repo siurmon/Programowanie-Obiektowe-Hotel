@@ -6,4 +6,11 @@ Faktura::Faktura(string& numer, int rezerwacja_id, Data& data, Kwota kwota_pobyt
 
 Kwota Faktura::suma() const { return kwota_pobytu_ + kwota_uslug_; }
 
-Data Faktura::pobierzDateWystawienia() const { return data_wystawienia_; }
+string Faktura::pobierzNumer() const { return numer_; }
+
+void Faktura::wyswietl() const {
+    cout << "Faktura: " << numer_ << endl;
+    cout << "Pobyt: " << kwota_pobytu_ << " zl" << endl;
+    cout << "Uslugi: " << kwota_uslug_ << " zl" << endl;
+    cout << "Razem: " << suma() << " zl" << endl;
+}

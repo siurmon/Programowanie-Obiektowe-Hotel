@@ -10,6 +10,8 @@ Pokoj::Pokoj(int numer_pokoju, int liczba_miejsc, Kwota stawka_dobowa)
 
 void Pokoj::ustawStatusSprzatania(StatusSprzatania status) { status_sprzatania_ = status; }
 
-int Pokoj::pobierzNumerPokoju() const { return numer_pokoju_; }
-
 StatusSprzatania Pokoj::pobierzStatusSprzatania() const { return status_sprzatania_; }
+
+int Pokoj::pobierzNumerPokoju() const { return numer_pokoju_; }
+int Pokoj::pobierzLiczbeMiejsc() const { return liczba_miejsc_; }
+Kwota Pokoj::pobierzStawke() const { return stawka_dobowa_; }
