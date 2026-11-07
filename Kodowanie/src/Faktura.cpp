@@ -1,8 +1,9 @@
 #include "Faktura.h"
+using namespace std;
 
-Faktura::Faktura(std::string numer, int rezId, Data data, Kwota pobyt, Kwota uslugi) 
-    : numer(numer), rezerwacjaId(rezId), dataWystawienia(data), kwotaPobytu(pobyt), kwotaUslug(uslugi) {}
+Faktura::Faktura(string& numer, int rezerwacja_id, Data& data, Kwota kwota_pobytu, Kwota kwota_uslug) 
+    : numer_(numer), rezerwacja_id_(rezerwacja_id), data_wystawienia_(data), kwota_pobytu_(kwota_pobytu), kwota_uslug_(kwota_uslug) {}
 
-Kwota Faktura::suma() const { return kwotaPobytu + kwotaUslug; }
+Kwota Faktura::suma() const { return kwota_pobytu_ + kwota_uslug_; }
 
-Data Faktura::pobierzDateWystawienia() const { return dataWystawienia; }
+Data Faktura::pobierzDateWystawienia() const { return data_wystawienia_; }

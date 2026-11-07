@@ -1,6 +1,9 @@
 #include "Personel_Pokojowy.h"
 
-Personel_Pokojowy::Personel_Pokojowy(int id, std::string im, std::string naz, std::string nr) 
-    : Pracownik(id, im, naz, nr) {}
+using namespace std;
 
-std::string Personel_Pokojowy::rola() const { return "Personel Pokojowy"; }
+
+Personel_Pokojowy::Personel_Pokojowy(int id, string imie, string nazwisko, string numer_pracownika) 
+    : Pracownik(id, imie, nazwisko, numer_pracownika) {}
+
+string Personel_Pokojowy::rola() const { return "Personel Pokojowy"; }

@@ -1,10 +1,12 @@
 #include "Usluga_Dodatkowa.h"
 
-Usluga_Dodatkowa::Usluga_Dodatkowa(int id, std::string nazwa, Kwota cena, std::string jednostka) 
-    : id(id), nazwa(nazwa), cenaJednostkowa(cena), nazwaJednostki(jednostka) {}
+using namespace std;
 
-int Usluga_Dodatkowa::pobierzId() const { return id; }
+UslugaDodatkowa::UslugaDodatkowa(int id, const string& nazwa, Kwota cena_jednostkowa, const string& jednostka) 
+    : id_(id), nazwa_(nazwa), cena_jednostkowa_(cena_jednostkowa), jednostka_(jednostka) {}
 
-std::string Usluga_Dodatkowa::pobierzNazwe() const { return nazwa; }
+int UslugaDodatkowa::pobierzId() const { return id_; }
 
-Kwota Usluga_Dodatkowa::pobierzCene() const { return cenaJednostkowa; }
+string UslugaDodatkowa::pobierzNazwe() const { return nazwa_; }
+
+Kwota UslugaDodatkowa::pobierzCene() const { return cena_jednostkowa_; }

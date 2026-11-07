@@ -1,6 +1,11 @@
 #include "Zamowiona_Usluga.h"
 
-Zamowiona_Usluga::Zamowiona_Usluga(int id, std::string nazwa, Kwota cena, int ilosc) 
-    : uslugaId(id), nazwa(nazwa), cenaJednostkowa(cena), ilosc(ilosc) {}
+using namespace std;
 
-Kwota Zamowiona_Usluga::obliczKoszt() const { return cenaJednostkowa * ilosc; }
+
+// przekazujemy obiekt UslugaDodatkowa i ilosc
+
+ZamowionaUsluga::ZamowionaUsluga(const UslugaDodatkowa& usluga, int ilosc) 
+    : usluga_id_(usluga.pobierzId()), nazwa_(usluga.pobierzNazwe()), cena_jednostkowa_(usluga.pobierzCene()), ilosc_(ilosc) {}
+
+Kwota ZamowionaUsluga::obliczKoszt() const { return cena_jednostkowa_ * ilosc_; }

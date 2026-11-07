@@ -1,6 +1,7 @@
 #include "Gosc.h"
+using namespace std;
 
-Gosc::Gosc(int id, std::string imie, std::string nazwisko, std::string email, std::string telefon) 
-    : Osoba(id, imie, nazwisko), email(email), telefon(telefon) {}
+Gosc::Gosc(int id, const string& imie, const string& nazwisko, const string& email, const string& telefon) 
+    : Osoba(id, imie, nazwisko), email_(email), telefon_(telefon) {}
 
-std::string Gosc::rola() const { return "Gosc"; }
+string Gosc::rola() const { return "Gosc"; }

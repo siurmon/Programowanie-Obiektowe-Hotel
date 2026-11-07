@@ -1,6 +1,8 @@
 #include "Manager.h"
 
-Manager::Manager(int id, std::string im, std::string naz, std::string nr) 
-    : Pracownik(id, im, naz, nr) {}
+using namespace std;
 
-std::string Manager::rola() const { return "Manager"; }
+Manager::Manager(int id, string imie, string nazwisko, string numer_pracownika) 
+    : Pracownik(id, imie, nazwisko, numer_pracownika) {}
+
+string Manager::rola() const { return "Manager"; }

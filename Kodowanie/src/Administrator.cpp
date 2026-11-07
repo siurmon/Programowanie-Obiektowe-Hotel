@@ -1,6 +1,7 @@
 #include "Administrator.h"
+using namespace std;
 
-Administrator::Administrator(int id, std::string im, std::string naz, std::string nr) 
-    : Pracownik(id, im, naz, nr) {}
+Administrator::Administrator(int id, string imie, string nazwisko, string numer_pracownika) 
+    : Pracownik(id, imie, nazwisko, numer_pracownika) {}
 
-std::string Administrator::rola() const { return "Administrator"; }
+string Administrator::rola() const { return "Administrator"; }

@@ -1,6 +1,10 @@
 #include "Osoba.h"
 
-Osoba::Osoba(int id, std::string imie, std::string nazwisko) 
-    : id(id), imie(imie), nazwisko(nazwisko) {}
+using namespace std;
 
-int Osoba::pobierzId() const { return id; }
+Osoba::Osoba(int id, const string& imie, const string& nazwisko) 
+    : id_(id), imie_(imie), nazwisko_(nazwisko) {}
+
+Osoba::~Osoba() = default;
+
+int Osoba::pobierzId() const { return id_; }

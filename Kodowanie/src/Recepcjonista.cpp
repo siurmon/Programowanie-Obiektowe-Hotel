@@ -1,6 +1,8 @@
 #include "Recepcjonista.h"
 
-Recepcjonista::Recepcjonista(int id, std::string im, std::string naz, std::string nr) 
-    : Pracownik(id, im, naz, nr) {}
+using namespace std;
 
-std::string Recepcjonista::rola() const { return "Recepcjonista"; }
+Recepcjonista::Recepcjonista(int id, const string& imie, const string& nazwisko, const string& numer_pracownika) 
+    : Pracownik(id, imie, nazwisko, numer_pracownika) {}
+
+string Recepcjonista::rola() const { return "Recepcjonista"; }

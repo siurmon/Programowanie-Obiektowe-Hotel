@@ -1,12 +1,15 @@
 #include "Pokoj.h"
 
-Pokoj::Pokoj(int numer, int miejsca, Kwota stawka) 
-    : numer_pokoju(numer), liczbaMiejsc(miejsca), stawkaDobowa(stawka), statusSprzatania(StatusSprzatania::GOTOWY) {}
+using namespace std;
+
+Pokoj::Pokoj(int numer_pokoju, int liczba_miejsc, Kwota stawka_dobowa) 
+    : numer_pokoju_(numer_pokoju), liczba_miejsc_(liczba_miejsc), stawka_dobowa_(stawka_dobowa), status_sprzatania_(StatusSprzatania::Czysty) {}
     
-    Kwota Pokoj::pobierzStawke() const { return stawkaDobowa; }
+    Kwota Pokoj::pobierzStawke() const { return stawka_dobowa_; }
 
-StatusSprzatania Pokoj::pobierzStatusSprzatania() const { return statusSprzatania; }
 
-void Pokoj::ustawStatusSprzatania(StatusSprzatania status) { statusSprzatania = status; }
+void Pokoj::ustawStatusSprzatania(StatusSprzatania status) { status_sprzatania_ = status; }
 
-int Pokoj::pobierzNumerPokoju() const { return numer_pokoju; }
+int Pokoj::pobierzNumerPokoju() const { return numer_pokoju_; }
+
+StatusSprzatania Pokoj::pobierzStatusSprzatania() const { return status_sprzatania_; }
