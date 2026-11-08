@@ -1,35 +1,33 @@
 #include "Kopia_Zapasowa.h"
 #include <iostream>
+#include <fstream>
+#include <stdexcept>
 
 using namespace std;
 
-Kopia_Zapasowa::Kopia_Zapasowa(int id, DataCzas data_utworzenia, const string& sciezka_pliku) 
+KopiaZapasowa::KopiaZapasowa(int id, DataCzas data_utworzenia, const string& sciezka_pliku) 
     : id(id), data_utworzenia_(data_utworzenia), sciezka_pliku_(sciezka_pliku), status_(StatusKopii::NieZapisana) {}
 
-//ZMIENIC METODY ZAPISZ I ZWERYFIKUJ NA WERSJE Z PLIKAMI
 
-bool Kopia_Zapasowa::zapisz(Data dane) {
-    // Symulacja zapisu danych do pliku
-    if (dane.empty() || sciezkaPliku.empty()) {
-        status = StatusKopii::BLAD;
+bool KopiaZapasowa::zapisz(const string& dane) {
+    ofstream plik(sciezka_pliku_);
+    if (!plik) {
+        status_ = StatusKopii::Blad;
         return false;
     }
-    // Tutaj w prawdziwym systemie byłby kod zapisu do pliku (np. ofstream)
-    status = StatusKopii::SUKCES;
-    cout << "Kopia zapasowa zapisana w: " << sciezkaPliku << endl;
-    return true;
+
+    plik << dane;
+    plik.close();
+    status_ = plik ? StatusKopii::Zapisana : StatusKopii::Blad;
+    return status_ == StatusKopii::Zapisana;
 }
 
-bool Kopia_Zapasowa::zweryfikuj() {
-    // Sprawdzenie, czy zapis się udał i czy plik istnieje
-    if (status == StatusKopii::SUKCES) {
-        cout << "Weryfikacja kopii: SUKCES." << endl;
-        return true;
-    }
-    cout << "Weryfikacja kopii: BLAD." << endl;
-    return false;
+bool KopiaZapasowa::zweryfikuj() const {
+    ifstream plik(sciezka_pliku_);
+    return status_ == StatusKopii::Zapisana && plik.good();
 }
 
-int Kopia_Zapasowa::pobierzId() const { return id; }
-StatusKopii Kopia_Zapasowa::pobierzStatus() const { return status; }
-string Kopia_Zapasowa::pobierzSciezke() const { return sciezkaPliku; }
+int KopiaZapasowa::pobierzId() const { return id; }
+StatusKopii KopiaZapasowa::pobierzStatus() const { return status; }
+string KopiaZapasowa::pobierzSciezke() const { return sciezkaPliku; }
+DataCzas KopiaZapasowa::pobierzDateUtworzenia() const { return data_utworzenia_;}
