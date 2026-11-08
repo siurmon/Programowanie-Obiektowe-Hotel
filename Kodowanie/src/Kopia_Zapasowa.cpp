@@ -6,7 +6,7 @@
 using namespace std;
 
 KopiaZapasowa::KopiaZapasowa(int id, DataCzas data_utworzenia, const string& sciezka_pliku) 
-    : id(id), data_utworzenia_(data_utworzenia), sciezka_pliku_(sciezka_pliku), status_(StatusKopii::NieZapisana) {}
+    : id_(id), data_utworzenia_(data_utworzenia), sciezka_pliku_(sciezka_pliku), status_(StatusKopii::NieZapisana) {}
 
 
 bool KopiaZapasowa::zapisz(const string& dane) {
@@ -27,7 +27,7 @@ bool KopiaZapasowa::zweryfikuj() const {
     return status_ == StatusKopii::Zapisana && plik.good();
 }
 
-int KopiaZapasowa::pobierzId() const { return id; }
-StatusKopii KopiaZapasowa::pobierzStatus() const { return status; }
-string KopiaZapasowa::pobierzSciezke() const { return sciezkaPliku; }
+int KopiaZapasowa::pobierzId() const { return id_; }
+StatusKopii KopiaZapasowa::pobierzStatus() const { return status_; }
+string KopiaZapasowa::pobierzSciezke() const { return sciezka_pliku_; }
 DataCzas KopiaZapasowa::pobierzDateUtworzenia() const { return data_utworzenia_;}

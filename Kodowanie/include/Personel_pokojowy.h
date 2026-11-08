@@ -1,8 +1,8 @@
 #pragma once
 #include "Pracownik.h"
 
-class Personel_Pokojowy : public Pracownik {
+class PersonelPokojowy : public Pracownik {
 public:
-    Personel_Pokojowy(int id, std::string im, std::string naz, std::string nr);
+    PersonelPokojowy(int id, std::string imie, std::string nazwisko, std::string numer_pracownika);
     std::string rola() const override;
 };

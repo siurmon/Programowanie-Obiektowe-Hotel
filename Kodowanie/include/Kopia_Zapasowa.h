@@ -1,20 +1,21 @@
 #pragma once
 #include <string>
-#include "common.h"
+#include "typy.h"
 
-class Kopia_Zapasowa {
+class KopiaZapasowa {
 private:
-    int id;
-    DataCzas dataUtworzenia;
-    std::string sciezkaPliku;
-    StatusKopii status;
+    int id_;
+    DataCzas data_utworzenia_;
+    std::string sciezka_pliku_;
+    StatusKopii status_;
 public:
-    Kopia_Zapasowa(int id, DataCzas data, std::string sciezka);
-    bool zapisz(Data dane); // Logika biznesowa
-    bool zweryfikuj();      // Tez
+    KopiaZapasowa(int id, DataCzas data_utworzenia, const std::string& sciezka_pliku);
+    bool zapisz(const std::string& dane);
+    bool zweryfikuj() const;
     
     // Gettery
     int pobierzId() const;
     StatusKopii pobierzStatus() const;
     std::string pobierzSciezke() const;
+    DataCzas pobierzDateUtworzenia() const;
 };

@@ -1,15 +1,16 @@
 #pragma once
 #include <string>
-#include "common.h"
-class Usluga_Dodatkowa {
+#include "typy.h"
+class UslugaDodatkowa {
 private:
-    int id;
-    std::string nazwa;
-    Kwota cenaJednostkowa;
-    std::string nazwaJednostki;
+    int id_;
+    std::string nazwa_;
+    Kwota cena_jednostkowa_;
+    std::string jednostka_;
 public:
-    Usluga_Dodatkowa(int id, std::string nazwa, Kwota cena, std::string jednostka);
+    UslugaDodatkowa(int id, const std::string& nazwa, Kwota cena_jednostkowa, const std::string& jednostka);
     int pobierzId() const;
     std::string pobierzNazwe() const;
     Kwota pobierzCene() const;
+    std::string pobierzJednostke() const;
 };

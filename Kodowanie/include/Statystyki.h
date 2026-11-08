@@ -1,22 +1,24 @@
 #pragma once
 #include <vector>
-#include "common.h"
-#include "Rezerwacja.h"
+#include "typy.h"
+
+class Rezerwacja;
 
 class Statystyki {
 private:
-    Data okresOd;
-    Data okresDo;
-    int liczbaRezerwacji;
-    double oblozenieProc;
-    Kwota przychodZFaktur;
+    Data okres_od_;
+    Data okres_do_;
+    int liczba_rezerwacji_;
+    double oblozenie_proc_;
+    Kwota przychod_z_faktur_;
 public:
-    Statystyki(Data od, Data do);
+    Statystyki();
     
-    void oblicz(const std::vector<Rezerwacja>& rezerwacje, int liczbaPokoi, Data od, Data do);
+    void oblicz(const std::vector<Rezerwacja>& rezerwacje, int liczba_pokoi, const Data& od, const Data& do_daty);
     
     // Gettery
     double pobierzOblozenie() const;
     Kwota pobierzPrzychod() const;
     int pobierzLiczbeRezerwacji() const;
 };
+

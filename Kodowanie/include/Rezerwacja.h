@@ -1,38 +1,43 @@
 #pragma once
 #include <vector>
 #include <optional>
-#include "common.h"
+#include "typy.h"
 #include "Faktura.h"
 #include "Zamowiona_Usluga.h"
-#include "Usluga_Dodatkowa.h"
 
 class Rezerwacja {
 private:
-    int id;
-    int goscId;
-    int pokojId;
-    Data dataOd;
-    Data dataDo;
-    DataCzas utworzono;
-    StatusRezerwacji status;
-    Kwota stawkaZaDobe;
-    std::optional<Faktura> faktura;
-    std::vector<Zamowiona_Usluga> zamowioneUslugi;
-    Kwota oplataAnulowania;
+    int id_;
+    int gosc_id_;
+    int numer_pokoju_;
+    Data data_od_;
+    Data data_do_;
+    DataCzas utworzono_;
+    StatusRezerwacji status_;
+    Kwota stawka_za_dobe_;
+    std::optional<Faktura> faktura_;
+    std::vector<ZamowionaUsluga> zamowione_uslugi_;
+    Kwota oplata_anulowania_;
 public:
-    Rezerwacja(int id, int goscId, int pokojId, Data od, Data do, Kwota stawka);
-    bool koliduje(Data od, Data do) const;
+    Rezerwacja(int id, int gosc_id, int numer_pokoju, const Data& od, const Data& do_daty, DataCzas utworzono, Kwota stawka_za_dobe);
+    bool koliduje(const Data& od, const Data& do_daty) const;
     int liczbaDob() const;
     Kwota obliczKoszt() const;
+    Kwota kosztUslug() const;
     void zamelduj();
     void wymelduj();
-    void dodajUsluge(const Usluga_Dodatkowa& usluga, int ilosc);
-    Faktura wystawFakture(std::string numer, Data data);
-    Kwota anuluj(DataCzas teraz, int limitGodzin, Kwota oplata);
+    void dodajUsluge(const UslugaDodatkowa& usluga, int ilosc);
+    Faktura wystawFakture(const std::string& numer, const Data& data);
+    Kwota anuluj(DataCzas teraz, int limit_godzin, Kwota oplata);
     
     // Gettery
     int pobierzId() const;
     int pobierzGoscId() const;
     int pobierzNumerPokoju() const;
     StatusRezerwacji pobierzStatus() const;
+    Data pobierzDataOd() const;
+    Data pobierzDataDo() const;
+    std::optional<Faktura> pobierzFakture() const;
 };
+
+class UslugaDodatkowa;

@@ -4,9 +4,6 @@ using namespace std;
 
 Pokoj::Pokoj(int numer_pokoju, int liczba_miejsc, Kwota stawka_dobowa) 
     : numer_pokoju_(numer_pokoju), liczba_miejsc_(liczba_miejsc), stawka_dobowa_(stawka_dobowa), status_sprzatania_(StatusSprzatania::Czysty) {}
-    
-    Kwota Pokoj::pobierzStawke() const { return stawka_dobowa_; }
-
 
 void Pokoj::ustawStatusSprzatania(StatusSprzatania status) { status_sprzatania_ = status; }
 

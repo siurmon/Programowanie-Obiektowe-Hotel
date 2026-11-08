@@ -3,6 +3,6 @@
 
 class Manager : public Pracownik {
 public:
-    Manager(int id, std::string im, std::string naz, std::string nr);
+    Manager(int id, std::string imie, std::string nazwisko, std::string numer_pracownika);
     std::string rola() const override;
 };

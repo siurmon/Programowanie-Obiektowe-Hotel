@@ -2,13 +2,15 @@
 #include <string>
 
 class Osoba {
-protected: 
-    int id;
-    std::string imie;
-    std::string nazwisko;
+private: 
+    int id_;
+    std::string imie_;
+    std::string nazwisko_;
 public:
-    Osoba(int id, std::string imie, std::string nazwisko);
-    virtual ~Osoba() = default;
+    Osoba(int id, const std::string& imie, const std::string& nazwisko);
+    virtual ~Osoba();
     int pobierzId() const;
     virtual std::string rola() const = 0; // abstract
+    std::string pobierzImie() const;
+    std::string pobierzNazwisko() const;
 };

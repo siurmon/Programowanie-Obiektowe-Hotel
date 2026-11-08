@@ -3,9 +3,11 @@
 
 class Gosc : public Osoba {
 private:
-    std::string email;
-    std::string telefon;
+    std::string email_;
+    std::string telefon_;
 public:
-    Gosc(int id, std::string imie, std::string nazwisko, std::string email, std::string telefon);
+    Gosc(int id, const std::string& imie, const std::string& nazwisko, const std::string& email, const std::string& telefon);
     std::string rola() const override;
+    std::string pobierzEmail() const;
+    std::string pobierzTelefon() const;
 };
