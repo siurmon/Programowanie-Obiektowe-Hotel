@@ -1,5 +1,5 @@
 #pragma once
-#include "typy.h"
+#include "Typy.h"
 class Pokoj {
 private:
     int numer_pokoju_;

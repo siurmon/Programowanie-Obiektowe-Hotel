@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "typy.h"
+#include "Typy.h"
 
 class Rezerwacja;
 

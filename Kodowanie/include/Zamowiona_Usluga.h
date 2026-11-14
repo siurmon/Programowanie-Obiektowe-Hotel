@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
-#include "typy.h"
-
-class UslugaDodatkowa;
+#include "Typy.h"
 
 class ZamowionaUsluga {
 private:
@@ -11,7 +9,7 @@ private:
     Kwota cena_jednostkowa_;
     int ilosc_;
 public:
-    ZamowionaUsluga(const UslugaDodatkowa& usluga, int ilosc);
+    ZamowionaUsluga(int usluga_id, const std::string& nazwa, Kwota cena_jednostkowa, int ilosc);
     Kwota obliczKoszt() const; 
     int pobierzUslugaId() const;
     int pobierzIlosc() const;

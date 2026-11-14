@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
-#include "typy.h"
+#include "Typy.h"
+
 class UslugaDodatkowa {
 private:
     int id_;

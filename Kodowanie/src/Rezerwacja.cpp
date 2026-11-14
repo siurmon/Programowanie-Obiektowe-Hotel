@@ -39,7 +39,10 @@ void Rezerwacja::dodajUsluge(const UslugaDodatkowa& usluga, int ilosc) {
     if (status_ == StatusRezerwacji::Wymeldowana || status_ == StatusRezerwacji::Anulowana) { 
         throw logic_error("Nie mozna dodac uslugi do zakonczonej rezerwacji");
     }
-    zamowione_uslugi_.emplace_back(usluga, ilosc);
+    // Rezerwacja pobiera dane uslugi i tworzy pozycje zamowienia
+    zamowione_uslugi_.emplace_back(
+        usluga.pobierzId(), usluga.pobierzNazwe(),
+        usluga.pobierzCene(), ilosc);
 }
 
 void Rezerwacja::zamelduj() {
@@ -73,6 +76,10 @@ Kwota Rezerwacja::anuluj(DataCzas teraz, int limit_godzin, Kwota oplata) {
     }
     if (limit_godzin < 0 || oplata < 0.0) {
         throw invalid_argument("Nieprawidlowa zasada anulowania");
+    }
+
+    if (teraz >= dataNaCzas(data_od_)) {
+        throw logic_error("Nie mozna anulowac po rozpoczeciu pobytu");
     }
 
     double godzin_do_przyjazdu =

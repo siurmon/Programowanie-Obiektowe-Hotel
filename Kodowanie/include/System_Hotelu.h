@@ -8,7 +8,7 @@
 #include "Rezerwacja.h"
 #include "Usluga_Dodatkowa.h"
 #include "Kopia_Zapasowa.h"
-#include "statystyki.h"
+#include "Statystyki.h"
 
 class SystemHotelu {
 private:
@@ -36,6 +36,7 @@ public:
     std::vector<int> wyszukajDostepnePokoje(const Data& od,const Data& do_daty) const;
     int zarezerwujPokoj(int gosc_id, int numer_pokoju,const Data& od, const Data& do_daty);
     void dodajUsluge(int rezerwacja_id, int usluga_id, int ilosc);
+    void dodajUslugeGoscia(int gosc_id, int rezerwacja_id, int usluga_id, int ilosc);
     void zamelduj(int rezerwacja_id);
     Faktura wymelduj(int rezerwacja_id);
     StatusSprzatania sprawdzStatusPokoju(int numer_pokoju) const;
@@ -46,5 +47,10 @@ public:
     Kwota anulujRezerwacje(int rezerwacja_id, DataCzas teraz);
     Kwota anulujRezerwacje(int gosc_id, int rezerwacja_id,DataCzas teraz);
     bool zweryfikujKopie(int kopia_id) const;
+
+    const std::vector<Gosc>& pobierzGosci() const;
+    const std::vector<Pokoj>& pobierzPokoje() const;
+    const std::vector<Rezerwacja>& pobierzRezerwacje() const;
+    const std::vector<UslugaDodatkowa>& pobierzUslugi() const;
 
 };

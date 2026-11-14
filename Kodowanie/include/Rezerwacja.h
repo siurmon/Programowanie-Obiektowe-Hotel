@@ -1,9 +1,11 @@
 #pragma once
 #include <vector>
 #include <optional>
-#include "typy.h"
+#include "Typy.h"
 #include "Faktura.h"
 #include "Zamowiona_Usluga.h"
+
+class UslugaDodatkowa;
 
 class Rezerwacja {
 private:
@@ -39,5 +41,3 @@ public:
     Data pobierzDataDo() const;
     std::optional<Faktura> pobierzFakture() const;
 };
-
-class UslugaDodatkowa;

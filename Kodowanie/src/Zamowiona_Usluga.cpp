@@ -1,17 +1,20 @@
 #include "Zamowiona_Usluga.h"
-#include "Usluga_Dodatkowa.h"
+
 #include <stdexcept>
 
 using namespace std;
 
-
-// przekazujemy obiekt UslugaDodatkowa i ilosc
-
-ZamowionaUsluga::ZamowionaUsluga(const UslugaDodatkowa& usluga, int ilosc) 
-    : usluga_id_(usluga.pobierzId()), nazwa_(usluga.pobierzNazwe()), cena_jednostkowa_(usluga.pobierzCene()), ilosc_(ilosc) {
+ZamowionaUsluga::ZamowionaUsluga(int usluga_id, const string& nazwa, Kwota cena_jednostkowa, int ilosc)
+    : usluga_id_(usluga_id), nazwa_(nazwa), cena_jednostkowa_(cena_jednostkowa), ilosc_(ilosc) {
         
-        if (ilosc <= 0) {
-        throw invalid_argument(
-            "Ilosc zamowionych uslug musi byc dodatnia");}}
+    if (usluga_id <= 0 || nazwa.empty() ||
+        cena_jednostkowa < 0.0 || ilosc <= 0) {
+        throw invalid_argument("Nieprawidlowe dane zamowionej uslugi");
+    }
+}
 
-Kwota ZamowionaUsluga::obliczKoszt() const { return cena_jednostkowa_ * ilosc_; }
+Kwota ZamowionaUsluga::obliczKoszt() const { return cena_jednostkowa_ * ilosc_;}
+
+int ZamowionaUsluga::pobierzUslugaId() const { return usluga_id_; }
+int ZamowionaUsluga::pobierzIlosc() const { return ilosc_; }
+string ZamowionaUsluga::pobierzNazwe() const { return nazwa_; }

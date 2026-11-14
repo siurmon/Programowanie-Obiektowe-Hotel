@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include "typy.h"
+#include "Typy.h"
 class Faktura {
 private:
     std::string numer_;
