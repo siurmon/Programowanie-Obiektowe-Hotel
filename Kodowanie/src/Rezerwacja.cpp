@@ -1,5 +1,5 @@
-#include "rezerwacja.h"
-#include "usluga_dodatkowa.h"
+#include "Rezerwacja.h"
+#include "Usluga_Dodatkowa.h"
 #include <stdexcept>
 
 using namespace std;

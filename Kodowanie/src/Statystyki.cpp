@@ -1,6 +1,5 @@
-#include "statystyki.h"
-
-#include "rezerwacja.h"
+#include "Statystyki.h"
+#include "Rezerwacja.h"
 
 #include <algorithm>
 #include <stdexcept>
