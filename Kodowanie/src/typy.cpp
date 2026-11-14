@@ -1,4 +1,4 @@
-#include "typy.h"
+#include "Typy.h"
 
 #include <cmath>
 #include <stdexcept>
