@@ -2,27 +2,26 @@
 
 #include <cmath>
 #include <stdexcept>
-#include <tuple>
+#include <tuple> //do porównywania dat
 
 using namespace std;
 
-bool operator<(const Data& a, const Data& b) {
+bool operator<(const Data& a, const Data& b) {  //porównanie dat, potrzebne do obliczeń statystyk
     return tie(a.rok, a.miesiac, a.dzien) <
            tie(b.rok, b.miesiac, b.dzien);
 }
 
 DataCzas dataNaCzas(const Data& data) {
-    if (data.rok < 1900 || data.miesiac < 1 || data.miesiac > 12 ||
-        data.dzien < 1 || data.dzien > 31) {
+    if (data.rok < 1900 || data.miesiac < 1 || data.miesiac > 12 || data.dzien < 1 || data.dzien > 31) {
         throw invalid_argument("Niepoprawna data");
     }
 
-    tm czas{};
+    tm czas{}; //tm ma zakres lat od 0 i zaczyna sie w 1900, dlatego odejmujemy 1900 od roku, miesiace sa liczone od 0, dlatego odejmujemy 1 od miesiaca
     czas.tm_year = data.rok - 1900;
     czas.tm_mon = data.miesiac - 1;
     czas.tm_mday = data.dzien;
     czas.tm_hour = 12;  // Przyjeta godzina przyjazdu: 12:00.
-    czas.tm_isdst = -1;
+    czas.tm_isdst = -1;  //czy jest czas letni, -1 oznacza, że funkcja mktime sama to ustali
 
     DataCzas wynik = mktime(&czas);
     if (wynik == static_cast<DataCzas>(-1)) {
@@ -30,9 +29,7 @@ DataCzas dataNaCzas(const Data& data) {
     }
 
     // mktime normalizuje nieistniejace daty, np. 31 lutego.
-    if (czas.tm_year + 1900 != data.rok ||
-        czas.tm_mon + 1 != data.miesiac ||
-        czas.tm_mday != data.dzien) {
+    if (czas.tm_year + 1900 != data.rok || czas.tm_mon + 1 != data.miesiac || czas.tm_mday != data.dzien) {
         throw invalid_argument("Niepoprawny dzien miesiaca");
     }
     return wynik;
@@ -50,7 +47,7 @@ int dniMiedzy(const Data& od, const Data& do_daty) {
 
 Data dzisiejszaData() {
     DataCzas teraz = time(nullptr);
-    tm* lokalny_czas = localtime(&teraz);
+    tm* lokalny_czas = localtime(&teraz); //localtime zwraca wskaznik, dlatego tm*
     if (lokalny_czas == nullptr) {
         throw runtime_error("Nie mozna odczytac daty systemowej");
     }

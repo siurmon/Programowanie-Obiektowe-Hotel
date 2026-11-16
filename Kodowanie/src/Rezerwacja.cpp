@@ -8,8 +8,7 @@ Rezerwacja::Rezerwacja(int id, int gosc_id, int numer_pokoju, const Data& od, co
     : id_(id), gosc_id_(gosc_id), numer_pokoju_(numer_pokoju), data_od_(od), data_do_(do_daty), utworzono_(utworzono),
         status_(StatusRezerwacji::Zarezerwowana), stawka_za_dobe_(stawka_za_dobe), oplata_anulowania_(0.0) {
 
-    if (id <= 0 || gosc_id <= 0 || numer_pokoju <= 0 ||
-        stawka_za_dobe < 0.0) {
+    if (id <= 0 || gosc_id <= 0 || numer_pokoju <= 0 || stawka_za_dobe < 0.0) {
         throw invalid_argument("Nieprawidlowe dane rezerwacji");
     }
     dniMiedzy(od, do_daty);
@@ -64,10 +63,9 @@ Faktura Rezerwacja::wystawFakture(const string& numer, const Data& data) {
         throw logic_error("Faktura jest wystawiana po wymeldowaniu");
     }
     if (!faktura_) {
-        faktura_.emplace(numer, id_, data,
-                         liczbaDob() * stawka_za_dobe_, kosztUslug());
+        faktura_.emplace(numer, id_, data, liczbaDob() * stawka_za_dobe_, kosztUslug());
     }
-    return *faktura_;
+    return *faktura_; //zwraca obiekt Faktura z wnętrza pojemnika optional 
 }
 
 Kwota Rezerwacja::anuluj(DataCzas teraz, int limit_godzin, Kwota oplata) {
@@ -82,8 +80,7 @@ Kwota Rezerwacja::anuluj(DataCzas teraz, int limit_godzin, Kwota oplata) {
         throw logic_error("Nie mozna anulowac po rozpoczeciu pobytu");
     }
 
-    double godzin_do_przyjazdu =
-        difftime(dataNaCzas(data_od_), teraz) / 3600.0;
+    double godzin_do_przyjazdu = difftime(dataNaCzas(data_od_), teraz) / 3600.0;
 
     if (godzin_do_przyjazdu < limit_godzin) {
         oplata_anulowania_ = oplata;

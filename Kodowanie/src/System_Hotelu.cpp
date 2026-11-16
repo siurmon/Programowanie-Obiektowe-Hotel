@@ -1,6 +1,6 @@
 #include "System_Hotelu.h"
 
-#include <algorithm>
+#include <algorithm> // find()
 #include <ctime>
 #include <sstream>
 #include <stdexcept>
@@ -9,20 +9,18 @@
 using namespace std;
 
 SystemHotelu::SystemHotelu(int limit_godzin, Kwota oplata)
-    : limit_anulowania_godzin_(limit_godzin),
-      oplata_za_pozne_anulowanie_(oplata),
-      kolejne_id_rezerwacji_(1) {
+    : limit_anulowania_godzin_(limit_godzin), oplata_za_pozne_anulowanie_(oplata), kolejne_id_rezerwacji_(1) {
     if (limit_godzin < 0 || oplata < 0.0) {
         throw invalid_argument("Nieprawidlowa konfiguracja hotelu");
     }
 }
 
-void SystemHotelu::dodajPracownika(unique_ptr<Pracownik> pracownik) {
+void SystemHotelu::dodajPracownika(unique_ptr<Pracownik> pracownik) { //unique_ptr<Pracownik> to wskaźnik, który przechowuje własność obiektu Pracownik i automatycznie go usuwa, gdy zachodzi potrzeba
     if (!pracownik) {
         throw invalid_argument("Nie podano pracownika");
     }
     for (const auto& osoba : pracownicy_) {
-        if (osoba->pobierzId() == pracownik->pobierzId()) {
+        if (osoba->pobierzId() == pracownik->pobierzId()) { //ooba to referencja do unikalnego wskaźnika, dlatego -> zamiast .costam()
             throw logic_error("Pracownik o takim ID juz istnieje");
         }
     }
@@ -65,6 +63,8 @@ Rezerwacja& SystemHotelu::znajdzRezerwacje(int id) {
     throw out_of_range("Nie znaleziono rezerwacji");
 }
 
+//Dwie funkcje do znajdowania pokoju, jedna zwraca const Pokoj&, a druga Pokoj&. 
+//Dzięki temu można używać const w funkcjach, które nie modyfikują obiektu, a w funkcjach, które modyfikują obiekt, można używać zwykłego Pokoj&.
 Pokoj& SystemHotelu::znajdzPokoj(int numer_pokoju) {
     for (auto& pokoj : pokoje_) {
         if (pokoj.pobierzNumerPokoju() == numer_pokoju) {
@@ -88,12 +88,11 @@ vector<int> SystemHotelu::wyszukajDostepnePokoje(
     dniMiedzy(od, do_daty);
     vector<int> dostepne;
 
+    //podwójna pętla, która sprawdza każdy pokój i każdą rezerwację, aby znaleźć dostępne pokoje w podanym okresie.
     for (const auto& pokoj : pokoje_) {
         bool zajety = false;
         for (const auto& rezerwacja : rezerwacje_) {
-            if (rezerwacja.pobierzNumerPokoju() ==
-                    pokoj.pobierzNumerPokoju() &&
-                rezerwacja.koliduje(od, do_daty)) {
+            if (rezerwacja.pobierzNumerPokoju() == pokoj.pobierzNumerPokoju() && rezerwacja.koliduje(od, do_daty)) {
                 zajety = true;
                 break;
             }
@@ -105,20 +104,23 @@ vector<int> SystemHotelu::wyszukajDostepnePokoje(
     return dostepne;
 }
 
-int SystemHotelu::zarezerwujPokoj(int gosc_id, int numer_pokoju,
-                                  const Data& od, const Data& do_daty) {
-    bool gosc_istnieje = any_of(goscie_.begin(), goscie_.end(),
-        [gosc_id](const Gosc& gosc) {
-            return gosc.pobierzId() == gosc_id;
-        });
+int SystemHotelu::zarezerwujPokoj(int gosc_id, int numer_pokoju, const Data& od, const Data& do_daty) {
+    bool gosc_istnieje = false;
+
+    for (const auto& gosc : goscie_) {
+        if (gosc.pobierzId() == gosc_id) {
+            gosc_istnieje = true;
+            break;
+        }
+    }
+
     if (!gosc_istnieje) {
         throw out_of_range("Nie znaleziono goscia");
     }
 
     const Pokoj& pokoj = znajdzPokoj(numer_pokoju);
     auto wolne_pokoje = wyszukajDostepnePokoje(od, do_daty);
-    if (find(wolne_pokoje.begin(), wolne_pokoje.end(), numer_pokoju) ==
-        wolne_pokoje.end()) {
+    if (find(wolne_pokoje.begin(), wolne_pokoje.end(), numer_pokoju) == wolne_pokoje.end()) { //find() znajduje element w wektorze
         throw logic_error("Pokoj jest zajety w tym terminie");
     }
 
@@ -130,8 +132,7 @@ int SystemHotelu::zarezerwujPokoj(int gosc_id, int numer_pokoju,
     return id;
 }
 
-void SystemHotelu::dodajUsluge(int rezerwacja_id, int usluga_id,
-                               int ilosc) {
+void SystemHotelu::dodajUsluge(int rezerwacja_id, int usluga_id, int ilosc) {
     for (const auto& usluga : uslugi_) {
         if (usluga.pobierzId() == usluga_id) {
             znajdzRezerwacje(rezerwacja_id).dodajUsluge(usluga, ilosc);
@@ -140,9 +141,8 @@ void SystemHotelu::dodajUsluge(int rezerwacja_id, int usluga_id,
     }
     throw out_of_range("Nie znaleziono uslugi");
 }
-
-void SystemHotelu::dodajUslugeGoscia(int gosc_id, int rezerwacja_id,
-                                     int usluga_id, int ilosc) {
+//Zabezpieczenie, że gość nie może dodać usługi do rezerwacji, która nie należy do niego
+void SystemHotelu::dodajUslugeGoscia(int gosc_id, int rezerwacja_id, int usluga_id, int ilosc) {
     if (znajdzRezerwacje(rezerwacja_id).pobierzGoscId() != gosc_id) {
         throw logic_error("Rezerwacja nie nalezy do tego goscia");
     }
@@ -156,10 +156,10 @@ void SystemHotelu::zamelduj(int rezerwacja_id) {
 Faktura SystemHotelu::wymelduj(int rezerwacja_id) {
     Rezerwacja& rezerwacja = znajdzRezerwacje(rezerwacja_id);
     rezerwacja.wymelduj();
-    znajdzPokoj(rezerwacja.pobierzNumerPokoju())
-        .ustawStatusSprzatania(StatusSprzatania::DoSprzatania);
-    return rezerwacja.wystawFakture(
-        "FV-" + to_string(rezerwacja_id), dzisiejszaData());
+    
+    znajdzPokoj(rezerwacja.pobierzNumerPokoju()).ustawStatusSprzatania(StatusSprzatania::DoSprzatania);
+    
+    return rezerwacja.wystawFakture("FV-" + to_string(rezerwacja_id), dzisiejszaData());
 }
 
 StatusSprzatania SystemHotelu::sprawdzStatusPokoju(
@@ -175,7 +175,7 @@ void SystemHotelu::zmienStatusSprzatania(
 Statystyki SystemHotelu::pobierzStatystyki(
     const Data& od, const Data& do_daty) const {
     Statystyki statystyki;
-    statystyki.oblicz(rezerwacje_, static_cast<int>(pokoje_.size()),
+    statystyki.oblicz(rezerwacje_, static_cast<int>(pokoje_.size()), //static_cast<int> konwertuje size_t na int
                       od, do_daty);
     return statystyki;
 }
@@ -208,15 +208,13 @@ KopiaZapasowa SystemHotelu::utworzKopieZapasowa(
     return kopia;
 }
 
-Kwota SystemHotelu::anulujRezerwacje(int rezerwacja_id,
-                                     DataCzas teraz) {
+//Przeciążenie funkcji anulujRezerwacje, aby umożliwić anulowanie rezerwacji zarówno przez system, jak i przez gościa
+Kwota SystemHotelu::anulujRezerwacje(int rezerwacja_id, DataCzas teraz) {
     return znajdzRezerwacje(rezerwacja_id).anuluj(
         teraz, limit_anulowania_godzin_, oplata_za_pozne_anulowanie_);
 }
 
-Kwota SystemHotelu::anulujRezerwacje(int gosc_id,
-                                     int rezerwacja_id,
-                                     DataCzas teraz) {
+Kwota SystemHotelu::anulujRezerwacje(int gosc_id, int rezerwacja_id, DataCzas teraz) {
     if (znajdzRezerwacje(rezerwacja_id).pobierzGoscId() != gosc_id) {
         throw logic_error("Rezerwacja nie nalezy do tego goscia");
     }

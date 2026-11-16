@@ -17,11 +17,9 @@ int main() {
     SystemHotelu hotel;
     int rola = 0;
     cout << fixed << setprecision(2);
-    cin.exceptions(ios::failbit | ios::badbit);
+    cin.exceptions(ios::failbit | ios::badbit); // Włączanie wyjątków dla błędów wejścia/wyjścia.
 
     cout << "SYSTEM HOTELU\n";
-    cout << "Dane zostana utracone po zamknieciu programu.\n";
-    cout << "Wybor roli nie jest logowaniem.\n";
 
     while (true) {
         try {

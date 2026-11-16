@@ -3,6 +3,6 @@
 
 class Administrator : public Pracownik {
 public:
-    Administrator(int id, std::string imie, std::string nazwisko, std::string numer_pracownika);
+    Administrator(int id, const std::string& imie, const std::string& nazwisko, const std::string& numer_pracownika);
     std::string rola() const override;
 };

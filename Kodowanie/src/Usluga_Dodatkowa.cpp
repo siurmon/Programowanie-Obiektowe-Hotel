@@ -13,6 +13,4 @@ UslugaDodatkowa::UslugaDodatkowa(int id, const string& nazwa, Kwota cena_jednost
 int UslugaDodatkowa::pobierzId() const { return id_; }
 string UslugaDodatkowa::pobierzNazwe() const { return nazwa_; }
 Kwota UslugaDodatkowa::pobierzCene() const { return cena_jednostkowa_; }
-string UslugaDodatkowa::pobierzJednostke() const {
-    return jednostka_;
-}
+string UslugaDodatkowa::pobierzJednostke() const { return jednostka_; }

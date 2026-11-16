@@ -7,13 +7,9 @@
 using namespace std;
 
 Statystyki::Statystyki()
-    : okres_od_{1900, 1, 1}, okres_do_{1900, 1, 2},
-      liczba_rezerwacji_(0), oblozenie_proc_(0.0),
-      przychod_z_faktur_(0.0) {}
+    : okres_od_{1900, 1, 1}, okres_do_{1900, 1, 2}, liczba_rezerwacji_(0), oblozenie_proc_(0.0), przychod_z_faktur_(0.0) {}
 
-void Statystyki::oblicz(const vector<Rezerwacja>& rezerwacje,
-                       int liczba_pokoi, const Data& od,
-                       const Data& do_daty) {
+void Statystyki::oblicz(const vector<Rezerwacja>& rezerwacje, int liczba_pokoi, const Data& od, const Data& do_daty) {
     if (liczba_pokoi < 0) {
         throw invalid_argument("Liczba pokoi nie moze byc ujemna");
     }
@@ -38,8 +34,8 @@ void Statystyki::oblicz(const vector<Rezerwacja>& rezerwacje,
 
         auto faktura = rezerwacja.pobierzFakture();
         if (faktura && !(faktura->pobierzDateWystawienia() < od) &&
-            faktura->pobierzDateWystawienia() < do_daty) {
-            przychod_z_faktur_ += faktura->suma();
+            faktura->pobierzDateWystawienia() < do_daty) {          //strzałki to to samo co (*faktura).suma()
+            przychod_z_faktur_ += faktura->suma(); 
         }
     }
 
@@ -50,9 +46,5 @@ void Statystyki::oblicz(const vector<Rezerwacja>& rezerwacje,
 }
 
 double Statystyki::pobierzOblozenie() const { return oblozenie_proc_; }
-Kwota Statystyki::pobierzPrzychod() const {
-    return przychod_z_faktur_;
-}
-int Statystyki::pobierzLiczbeRezerwacji() const {
-    return liczba_rezerwacji_;
-}
+Kwota Statystyki::pobierzPrzychod() const {return przychod_z_faktur_; }
+int Statystyki::pobierzLiczbeRezerwacji() const {return liczba_rezerwacji_; }
